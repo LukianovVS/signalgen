@@ -52,8 +52,8 @@ def prn_gps_L1CA(prn_i):
                  ( G2[ind_xor[0]] ^ G2[ind_xor[1]] )
         
         g_new = G1[3 - 1] ^ G1[10 - 1]
-        G1 = [ g_new, G1[0:-1] ]
+        G1 =  [g_new] + G1[0:-1]
         
         g_new = G2[2 - 1] ^ G2[3 - 1] ^ G2[6 - 1] ^ G2[8 - 1] ^ G2[9 - 1] ^ G2[10 - 1]
-        G2 = [ g_new, G2[0:-1] ]
-        
+        G2 = [g_new] + G2[0:-1]
+    return prn_list
