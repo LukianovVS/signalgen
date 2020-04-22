@@ -100,8 +100,8 @@ def _genL2C(reg_list, Len):
     prn_list = [0] * Len;
     #print(oct(listToNum(reg_list)))
     for i in range(Len):
-        #if i == Len - 1:
-        #    print(oct(listToNum(reg_list)))
+    #    if i == Len - 1:
+    #        print(oct(listToNum(reg_list)))
         new_val = reg_list[0]
         prn_list[i] = new_val
         #register update
@@ -128,9 +128,45 @@ return: list of code
     
     if tSignal == 'L2CM' or tSignal == 'L2C':
         if prn == 1:
-             reg_init_l2cm = numToList(int('742417664', 8), L2C_len_gen)
-        prn_list = _genL2C(reg_init_l2cm, Len_prn_L2CM)
+             reg_init = numToList(int('742417664', 8), L2C_len_gen)
+        elif prn == 2:
+            reg_init = numToList(int('756014035', 8), L2C_len_gen)
+        elif prn == 3:
+            reg_init = numToList(int('002747144', 8), L2C_len_gen)
+        elif prn == 4:
+            reg_init = numToList(int('066265724', 8), L2C_len_gen)
+        elif prn == 5:
+            reg_init = numToList(int('601403471', 8), L2C_len_gen)
+        else:
+            print('error: undef case...')
+            1/0#error
+        
+        prn_list_l2cm = _genL2C(reg_init, Len_prn_L2CM)
+        if tSignal == 'L2CM':
+            return prn_list_l2cm
     
+    if tSignal == 'L2CL' or tSignal == 'L2C':
+        if prn == 1:
+            reg_init = numToList(int('624145772', 8), L2C_len_gen)
+        elif prn == 2:
+            reg_init = numToList(int('506610362', 8), L2C_len_gen)
+        elif prn == 3:
+            reg_init = numToList(int('220360016', 8), L2C_len_gen)
+        elif prn == 4:
+            reg_init = numToList(int('710406104', 8), L2C_len_gen)
+        elif prn == 5:
+            reg_init = numToList(int('001143345', 8), L2C_len_gen)
+        else:
+            print('error: undef case...')
+            1/0#error
+        
+        prn_list_l2cl = _genL2C(reg_init, Len_prn_L2CL)
+        if tSignal == 'L2CL':
+            return prn_list_l2cl
+    # L2CL + L2CM
+    print('error: undef case...')
+    1/0#error
+    prn_list = []
     return prn_list
     
     
