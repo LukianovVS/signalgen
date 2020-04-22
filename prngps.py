@@ -114,12 +114,12 @@ def _genL2C(reg_list, Len):
     return prn_list
         
 
-def genL2C(prn, tSignal = 'L2CM', nav_data = []):
+def genL2C(prn, tSignal = 'L2CM', nav_data = [1, 0]):
     """code generator for L2CL or L2CM or L2CM+L2CL signals
     
 param in: prn - number of PRN (SV)
 param in: tSignal - type of signal: L2CL, L2CL, L2C (for L2CL + L2CM)
-param in: nav_data - data for L2CM
+param in: nav_data - data for L2CM, valid value [1, 1], [0,0] - const, [1, 0], [0, 1] - meander
 return: list of code
     """
     if prn < 1 or prn > 32:
@@ -164,9 +164,12 @@ return: list of code
         if tSignal == 'L2CL':
             return prn_list_l2cl
     # L2CL + L2CM
-    print('error: undef case...')
-    1/0#error
-    prn_list = []
+    # На перидоде L2CL формируем суммарный сигнал  
+    prn_list = [0]*(Len_prn_L2CL*2)
+    for k in range(Len_prn_L2CL):
+        # The first L2CM, then L2LM
+        prn_list[2*k    ] = prn_list_l2cm[k % Len_prn_L2CM] ^ nav_data[k % 2]
+        prn_list[2*k + 1] = prn_list_l2cl[k               ]
     return prn_list
     
     
